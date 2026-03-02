@@ -1,1143 +1,183 @@
-<!DOCTYPE html>
+# Создадим HTML файл с функциональными ссылками
+html_content = """<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>КафельГранит × Bellezza Tech — Партнёрское предложение</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0a0a0a">
+    <title>КафельГранит × Bellezza Tech</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #F4E8C1;
-            --black: #0a0a0a;
-            --dark-gray: #1a1a1a;
-            --white: #ffffff;
-            --bronze: #8B7355;
-            --gray-text: #888888;
-            --green: #00c853;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4AF37; --gold-light: #F4E8C1; --black: #0a0a0a; --dark-gray: #1a1a1a; --white: #ffffff; --bronze: #8B7355; --gray-text: #888888; --green: #00c853; }
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
-
-        html, body {
-            font-family: 'Inter', sans-serif;
-            background: var(--black);
-            color: var(--white);
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            font-size: 16px;
-        }
-
-        .presentation {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.6s ease-in-out;
-            padding: 40px;
-            background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
-            overflow: hidden;
-        }
-
-        .slide.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        /* Навигация */
-        .nav {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-            z-index: 1000;
-            background: rgba(0,0,0,0.85);
-            padding: 10px 18px;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(212,175,55,0.3);
-        }
-
-        .nav-btn {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .nav-btn:hover, .nav-btn.active {
-            background: var(--gold);
-            transform: scale(1.3);
-        }
-
-        .nav-arrows {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            display: flex;
-            gap: 8px;
-            z-index: 1000;
-        }
-
-        .arrow-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(212,175,55,0.2);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .arrow-btn:hover {
-            background: var(--gold);
-            color: var(--black);
-            transform: scale(1.1);
-        }
-
-        /* Прогресс-бар */
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--bronze));
-            transition: width 0.3s;
-            z-index: 1001;
-        }
-
-        /* Номер слайда */
-        .slide-number {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.5);
-            z-index: 1000;
-            background: rgba(0,0,0,0.5);
-            padding: 5px 12px;
-            border-radius: 15px;
-        }
-
-        .slide-number span {
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        /* ============================================
-           СЛАЙД 1: ИНТРО
-           ============================================ */
-        .slide-1 {
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: 
-                radial-gradient(circle at 30% 50%, rgba(212,175,55,0.1) 0%, transparent 50%),
-                linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
-        }
-
-        .logo-main {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 900;
-            color: var(--gold);
-            margin-bottom: 10px;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-        }
-
-        .logo-sub {
-            font-size: clamp(1rem, 2vw, 1.4rem);
-            color: var(--gold-light);
-            margin-bottom: 30px;
-            letter-spacing: 10px;
-        }
-
-        .hook-text {
-            font-size: clamp(1.5rem, 3vw, 2.4rem);
-            max-width: 80%;
-            line-height: 1.4;
-            margin-bottom: 25px;
-            font-weight: 300;
-        }
-
-        .hook-text span {
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .patent-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(212,175,55,0.1);
-            border: 1px solid var(--gold);
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 14px;
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        .patent-badge::before {
-            content: "★";
-            font-size: 16px;
-        }
-
-        /* ============================================
-           СЛАЙД 2: О КОМПАНИИ
-           ============================================ */
-        .slide-2 {
-            flex-direction: row;
-            align-items: center;
-            gap: 30px;
-        }
-
-        .company-info {
-            flex: 1.2;
-            min-width: 0;
-        }
-
-        .company-visual {
-            flex: 0.8;
-            height: 60%;
-            min-height: 300px;
-            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(139,115,85,0.1));
-            border-radius: 20px;
-            border: 1px solid rgba(212,175,55,0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .company-visual::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(212,175,55,0.05) 20px, rgba(212,175,55,0.05) 40px);
-            animation: slide 20s linear infinite;
-        }
-
-        @keyframes slide {
-            0% { transform: translate(-50%, -50%); }
-            100% { transform: translate(0, 0); }
-        }
-
-        .company-visual-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .company-visual-content .kg-logo {
-            font-size: 5rem;
-            color: var(--gold);
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-        }
-
-        .company-visual-content .kg-text {
-            font-size: 1.1rem;
-            color: var(--gold-light);
-            margin-top: 15px;
-        }
-
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .company-desc {
-            font-size: clamp(14px, 1.5vw, 18px);
-            line-height: 1.6;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .stat-item {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 3px solid var(--gold);
-        }
-
-        .stat-number {
-            font-size: clamp(1.5rem, 2vw, 2.2rem);
-            font-weight: 700;
-            color: var(--gold);
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            margin-top: 5px;
-            line-height: 1.3;
-        }
-
-        /* ============================================
-           СЛАЙД 3: ПРОБЛЕМА
-           ============================================ */
-        .slide-3 {
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .problem-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 25px 15px;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .problem-card:hover {
-            border-color: rgba(255,0,0,0.5);
-            transform: translateY(-5px);
-        }
-
-        .problem-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            opacity: 0.6;
-        }
-
-        .problem-card h3 {
-            color: rgba(255,255,255,0.7);
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.3;
-        }
-
-        .vs-divider {
-            text-align: center;
-            margin: 25px 0;
-            font-size: 1.2rem;
-            color: var(--gold);
-            font-weight: 600;
-            position: relative;
-        }
-
-        .vs-divider::before,
-        .vs-divider::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: 150px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold));
-        }
-
-        .vs-divider::before { right: calc(50% + 30px); }
-        .vs-divider::after { left: calc(50% + 30px); transform: rotate(180deg); }
-
-        .solution-text {
-            text-align: center;
-            font-size: 1.3rem;
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        /* ============================================
-           ТЕХНОЛОГИЧЕСКИЕ СЛАЙДЫ
-           ============================================ */
-        .tech-slide {
-            flex-direction: row;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .tech-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .tech-visual {
-            flex: 0.9;
-            height: 55%;
-            min-height: 280px;
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .tech-badge {
-            display: inline-block;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 12px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
+        html, body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); height: 100%; width: 100%; overflow: hidden; font-size: 16px; -webkit-text-size-adjust: 100%; }
+        .presentation { width: 100%; height: 100%; position: relative; }
+        .slide { position: absolute; width: 100%; height: 100%; display: none; opacity: 0; transition: opacity 0.6s ease-in-out; padding: 40px; background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%); overflow: hidden; }
+        .slide.active { display: flex; opacity: 1; }
+        .nav { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 1000; background: rgba(0,0,0,0.85); padding: 10px 18px; border-radius: 50px; border: 1px solid rgba(212,175,55,0.3); }
+        .nav-btn { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.3); border: none; cursor: pointer; }
+        .nav-btn.active { background: var(--gold); }
+        .nav-arrows { position: fixed; bottom: 20px; right: 20px; display: flex; gap: 8px; z-index: 1000; }
+        .arrow-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(212,175,55,0.2); border: 1px solid var(--gold); color: var(--gold); font-size: 16px; cursor: pointer; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--bronze)); z-index: 1001; }
+        .slide-number { position: fixed; top: 20px; right: 20px; font-size: 14px; color: rgba(255,255,255,0.5); z-index: 1000; background: rgba(0,0,0,0.5); padding: 5px 12px; border-radius: 15px; }
+        .slide-number span { color: var(--gold); font-weight: 600; }
+        
+        /* Ссылки для контактов */
+        .contact-link { text-decoration: none; color: inherit; display: block; }
+        .contact-link:hover { transform: scale(1.02); }
+        
+        /* Основные стили слайдов */
+        .slide-1 { flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .logo-main { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; color: var(--gold); margin-bottom: 10px; letter-spacing: 5px; }
+        .logo-sub { font-size: clamp(1rem, 2vw, 1.4rem); color: var(--gold-light); margin-bottom: 30px; letter-spacing: 10px; }
+        .hook-text { font-size: clamp(1.5rem, 3vw, 2.4rem); max-width: 80%; line-height: 1.4; margin-bottom: 25px; font-weight: 300; }
+        .hook-text span { color: var(--gold); font-weight: 600; }
+        .patent-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(212,175,55,0.1); border: 1px solid var(--gold); padding: 12px 25px; border-radius: 50px; font-size: 14px; color: var(--gold); }
+        
+        .slide-2 { flex-direction: row; align-items: center; gap: 30px; }
+        .company-info { flex: 1.2; }
+        .company-visual { flex: 0.8; height: 60%; background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(139,115,85,0.1)); border-radius: 20px; border: 1px solid rgba(212,175,55,0.3); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .kg-logo { font-size: 5rem; color: var(--gold); font-family: 'Playfair Display', serif; font-weight: 900; }
+        .kg-text { font-size: 1.1rem; color: var(--gold-light); margin-top: 15px; }
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem); color: var(--gold); margin-bottom: 20px; }
+        .company-desc { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.6; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .stat-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; border-left: 3px solid var(--gold); }
+        .stat-number { font-size: clamp(1.5rem, 2vw, 2.2rem); font-weight: 700; color: var(--gold); }
+        .stat-label { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px; }
+        
+        .slide-3 { flex-direction: column; justify-content: center; }
+        .problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 30px; }
+        .problem-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 25px 15px; border-radius: 15px; text-align: center; }
+        .problem-icon { font-size: 2.5rem; margin-bottom: 15px; opacity: 0.6; }
+        .problem-card h3 { color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 400; }
+        .vs-divider { text-align: center; margin: 25px 0; font-size: 1.2rem; color: var(--gold); font-weight: 600; }
+        .solution-text { text-align: center; font-size: 1.3rem; color: var(--gold); font-weight: 600; }
+        
+        .tech-slide { flex-direction: row; align-items: center; gap: 40px; }
+        .tech-content { flex: 1; }
+        .tech-visual { flex: 0.9; height: 55%; border-radius: 20px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .tech-badge { display: inline-block; padding: 8px 18px; border-radius: 50px; font-weight: 600; font-size: 12px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
         .tech-badge.gold { background: var(--gold); color: var(--black); }
         .tech-badge.green { background: var(--green); color: var(--black); }
         .tech-badge.blue { background: #0080ff; color: var(--white); }
-
-        .tech-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3vw, 3.2rem);
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
+        .tech-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3vw, 3.2rem); margin-bottom: 15px; }
         .tech-title.gold { color: var(--gold); }
         .tech-title.green { color: var(--green); }
         .tech-title.blue { color: #0080ff; }
-
-        .tech-desc {
-            font-size: clamp(14px, 1.5vw, 18px);
-            line-height: 1.5;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-        }
-
-        .tech-feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            font-size: 15px;
-        }
-
-        .tech-feature::before {
-            content: "→";
-            color: var(--gold);
-            font-weight: bold;
-        }
-
-        .tech-visual-content {
-            text-align: center;
-            z-index: 1;
-        }
-
-        .tech-visual-icon {
-            font-size: 5rem;
-            margin-bottom: 15px;
-        }
-
-        .tech-visual-text {
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .glow-effect {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(212,175,55,0.3) 0%, transparent 70%);
-            animation: pulse 3s ease-in-out infinite;
-        }
-
-        .glow-effect.green {
-            background: radial-gradient(circle at center, rgba(0,255,100,0.2) 0%, transparent 70%);
-        }
-
-        .glow-effect.blue {
-            background: radial-gradient(circle at center, rgba(0,128,255,0.2) 0%, transparent 70%);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
-        }
-
-        /* ============================================
-           СЛАЙД 7: CER-SINK FULL
-           ============================================ */
-        .slide-7 {
-            flex-direction: row;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .sink-showcase {
-            flex: 1;
-            height: 65%;
-            min-height: 320px;
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-            border: 2px solid rgba(212,175,55,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .sink-placeholder {
-            text-align: center;
-        }
-
-        .sink-placeholder-icon {
-            font-size: 6rem;
-            margin-bottom: 15px;
-        }
-
-        .sink-placeholder-text {
-            color: var(--gray-text);
-            font-size: 14px;
-        }
-
-        .sink-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 25px;
-        }
-
-        .sink-label {
-            color: var(--gold);
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 5px;
-        }
-
-        .sink-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--white);
-        }
-
-        .sink-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .sink-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #666, #888);
-            color: var(--white);
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 12px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .sink-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3vw, 3.2rem);
-            margin-bottom: 15px;
-            line-height: 1.2;
-            color: var(--white);
-        }
-
-        .sink-desc {
-            font-size: clamp(14px, 1.5vw, 18px);
-            line-height: 1.5;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-        }
-
-        .sink-benefits {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .sink-benefit {
-            background: rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 10px;
-            border-left: 3px solid var(--gold);
-        }
-
-        .sink-benefit h4 {
-            color: var(--gold);
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        .sink-benefit p {
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
-            line-height: 1.3;
-        }
-
-        /* ============================================
-           СЛАЙД 8: ТЕСТЫ
-           ============================================ */
-        .slide-8 {
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .slide-8 h2 {
-            margin-bottom: 10px;
-        }
-
-        .slide-subtitle {
-            font-size: 16px;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 25px;
-        }
-
-        .test-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .test-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(212,175,55,0.2);
-            transition: all 0.3s;
-        }
-
-        .test-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-3px);
-        }
-
-        .test-icon {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .test-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--gold);
-            margin-bottom: 8px;
-        }
-
-        .test-result {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
-        }
-
-        /* ============================================
-           СЛАЙД 9: ПРОДУКТЫ
-           ============================================ */
-        .slide-9 {
-            flex-direction: column;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 25px;
-            flex: 1;
-        }
-
-        .product-card {
-            background: rgba(255,255,255,0.03);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            border-color: var(--gold);
-            background: rgba(212,175,55,0.05);
-        }
-
-        .product-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-
-        .product-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--gold-light);
-        }
-
-        .product-list {
-            list-style: none;
-            font-size: 14px;
-            color: rgba(255,255,255,0.7);
-            flex: 1;
-        }
-
-        .product-list li {
-            margin: 6px 0;
-            padding-left: 15px;
-            position: relative;
-        }
-
-        .product-list li::before {
-            content: "•";
-            color: var(--gold);
-            position: absolute;
-            left: 0;
-        }
-
-        .product-highlight {
-            background: rgba(212,175,55,0.1);
-            border: 1px solid var(--gold);
-            border-radius: 8px;
-            padding: 10px;
-            margin-top: 15px;
-            font-size: 13px;
-            color: var(--gold);
-            font-weight: 600;
-        }
-
-        /* ============================================
-           СЛАЙД 10: КЕЙСЫ
-           ============================================ */
-        .slide-10 {
-            flex-direction: column;
-        }
-
-        .cases-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .cases-subtitle {
-            font-size: 16px;
-            color: rgba(255,255,255,0.7);
-            margin-top: 8px;
-        }
-
-        .cases-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            flex: 1;
-        }
-
-        .case-card {
-            background: rgba(255,255,255,0.03);
-            border-radius: 15px;
-            padding: 18px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .case-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-3px);
-        }
-
-        .case-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--bronze));
-        }
-
-        .case-number {
-            position: absolute;
-            top: 12px;
-            right: 15px;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: rgba(212,175,55,0.1);
-            font-family: 'Playfair Display', serif;
-        }
-
-        .case-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--gold);
-            margin-bottom: 12px;
-            padding-right: 40px;
-        }
-
-        .case-specs {
-            margin-bottom: 12px;
-            flex: 1;
-        }
-
-        .case-spec {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 13px;
-        }
-
-        .case-spec:last-child {
-            border-bottom: none;
-        }
-
-        .case-spec-label {
-            color: rgba(255,255,255,0.6);
-        }
-
-        .case-spec-value {
-            color: var(--white);
-            font-weight: 500;
-        }
-
-        .case-profit {
-            background: rgba(0,200,83,0.1);
-            border: 1px solid var(--green);
-            border-radius: 10px;
-            padding: 12px;
-            text-align: center;
-            margin-top: auto;
-        }
-
-        .case-profit-label {
-            font-size: 11px;
-            color: rgba(255,255,255,0.7);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-        }
-
-        .case-profit-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--green);
-        }
-
-        .case-margin {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
-            margin-top: 3px;
-        }
-
-        /* ============================================
-           СЛАЙД 11: ПАРТНЁРСТВО
-           ============================================ */
-        .slide-11 {
-            flex-direction: row;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .partnership-content {
-            flex: 1.3;
-            min-width: 0;
-        }
-
-        .partnership-intro {
-            font-size: 16px;
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 20px;
-        }
-
-        .benefits-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .benefit-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 12px;
-            border-left: 3px solid var(--gold);
-            transition: all 0.3s;
-        }
-
-        .benefit-item:hover {
-            background: rgba(212,175,55,0.05);
-            transform: translateX(5px);
-        }
-
-        .benefit-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--gold);
-            line-height: 1;
-            min-width: 30px;
-        }
-
-        .benefit-text h4 {
-            font-size: 16px;
-            margin-bottom: 3px;
-            color: var(--white);
-        }
-
-        .benefit-text p {
-            font-size: 13px;
-            color: rgba(255,255,255,0.7);
-            line-height: 1.4;
-        }
-
-        .partnership-visual {
-            flex: 0.7;
-            height: 60%;
-            min-height: 300px;
-            background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(139,115,85,0.1));
-            border: 2px solid var(--gold);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .partnership-visual-content {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .margin-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .margin-value {
-            font-size: 2.5rem;
-            color: var(--gold);
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .margin-label {
-            font-size: 14px;
-            color: rgba(255,255,255,0.8);
-            line-height: 1.4;
-        }
-
-        /* ============================================
-           СЛАЙД 12: КОНТАКТЫ
-           ============================================ */
-        .slide-12 {
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: 
-                radial-gradient(circle at 70% 50%, rgba(212,175,55,0.15) 0%, transparent 50%),
-                linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
-        }
-
-        .final-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2rem, 3.5vw, 3.2rem);
-            margin-bottom: 15px;
-            color: var(--gold);
-        }
-
-        .final-subtitle {
-            font-size: clamp(16px, 2vw, 20px);
-            color: rgba(255,255,255,0.8);
-            margin-bottom: 35px;
-            max-width: 70%;
-        }
-
-        .contacts-grid {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .contact-item {
-            background: rgba(255,255,255,0.05);
-            padding: 18px 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(212,175,55,0.3);
-            transition: all 0.3s;
-        }
-
-        .contact-item:hover {
-            background: rgba(212,175,55,0.1);
-            transform: scale(1.05);
-        }
-
-        .contact-label {
-            font-size: 12px;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-        }
-
-        .contact-value {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--white);
-        }
-
-        .contact-value.small {
-            font-size: 1.1rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--gold), var(--bronze));
-            color: var(--black);
-            padding: 15px 45px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 700;
-            text-decoration: none;
-            margin-top: 15px;
-            transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
-            cursor: pointer;
-            border: none;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(212,175,55,0.4);
-        }
-
-        .logos-footer {
-            display: flex;
-            gap: 25px;
-            margin-top: 40px;
-            align-items: center;
-        }
-
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .footer-logo.gold {
-            color: var(--gold);
-        }
-
-        /* ============================================
-           АДАПТИВНОСТЬ
-           ============================================ */
-        @media (max-width: 1200px) {
-            .slide {
-                padding: 30px;
-            }
-
-            .problem-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .test-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        .tech-desc { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+        .tech-feature { display: flex; align-items: center; gap: 10px; margin: 10px 0; font-size: 15px; }
+        .tech-feature::before { content: "→"; color: var(--gold); font-weight: bold; }
+        .tech-visual-content { text-align: center; z-index: 1; }
+        .tech-visual-icon { font-size: 5rem; margin-bottom: 15px; }
+        .tech-visual-text { font-size: 1.3rem; font-weight: 600; }
+        .glow-effect { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(212,175,55,0.3) 0%, transparent 70%); animation: pulse 3s ease-in-out infinite; }
+        .glow-effect.green { background: radial-gradient(circle at center, rgba(0,255,100,0.2) 0%, transparent 70%); }
+        .glow-effect.blue { background: radial-gradient(circle at center, rgba(0,128,255,0.2) 0%, transparent 70%); }
+        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 0.8; } }
+        
+        .slide-7 { flex-direction: row; align-items: center; gap: 40px; }
+        .sink-showcase { flex: 1; height: 65%; position: relative; border-radius: 20px; overflow: hidden; background: linear-gradient(135deg, #2a2a2a, #1a1a1a); border: 2px solid rgba(212,175,55,0.3); display: flex; align-items: center; justify-content: center; }
+        .sink-placeholder { text-align: center; }
+        .sink-placeholder-icon { font-size: 6rem; margin-bottom: 15px; }
+        .sink-placeholder-text { color: var(--gray-text); font-size: 14px; }
+        .sink-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 25px; }
+        .sink-label { color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 5px; }
+        .sink-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--white); }
+        .sink-content { flex: 1; }
+        .sink-badge { display: inline-block; background: linear-gradient(135deg, #666, #888); color: var(--white); padding: 8px 18px; border-radius: 50px; font-weight: 600; font-size: 12px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+        .sink-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3vw, 3.2rem); margin-bottom: 15px; color: var(--white); }
+        .sink-desc { font-size: clamp(14px, 1.5vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+        .sink-benefits { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .sink-benefit { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 10px; border-left: 3px solid var(--gold); }
+        .sink-benefit h4 { color: var(--gold); margin-bottom: 5px; font-size: 14px; }
+        .sink-benefit p { color: rgba(255,255,255,0.7); font-size: 12px; }
+        
+        .slide-8 { flex-direction: column; justify-content: center; }
+        .slide-subtitle { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 25px; }
+        .test-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
+        .test-card { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 20px; text-align: center; border: 1px solid rgba(212,175,55,0.2); }
+        .test-icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+        .test-name { font-size: 16px; font-weight: 600; color: var(--gold); margin-bottom: 8px; }
+        .test-result { font-size: 13px; color: rgba(255,255,255,0.8); }
+        
+        .slide-9 { flex-direction: column; }
+        .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 25px; flex: 1; }
+        .product-card { background: rgba(255,255,255,0.03); border-radius: 15px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; }
+        .product-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .product-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 12px; color: var(--gold-light); }
+        .product-list { list-style: none; font-size: 14px; color: rgba(255,255,255,0.7); flex: 1; }
+        .product-list li { margin: 6px 0; padding-left: 15px; position: relative; }
+        .product-list li::before { content: "•"; color: var(--gold); position: absolute; left: 0; }
+        .product-highlight { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); border-radius: 8px; padding: 10px; margin-top: 15px; font-size: 13px; color: var(--gold); font-weight: 600; }
+        
+        .slide-10 { flex-direction: column; }
+        .cases-header { text-align: center; margin-bottom: 20px; }
+        .cases-subtitle { font-size: 16px; color: rgba(255,255,255,0.7); margin-top: 8px; }
+        .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; flex: 1; }
+        .case-card { background: rgba(255,255,255,0.03); border-radius: 15px; padding: 18px; border: 1px solid rgba(255,255,255,0.1); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .case-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, var(--gold), var(--bronze)); }
+        .case-number { position: absolute; top: 12px; right: 15px; font-size: 2.5rem; font-weight: 900; color: rgba(212,175,55,0.1); font-family: 'Playfair Display', serif; }
+        .case-title { font-size: 15px; font-weight: 600; color: var(--gold); margin-bottom: 12px; padding-right: 40px; }
+        .case-specs { margin-bottom: 12px; flex: 1; }
+        .case-spec { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; }
+        .case-spec-label { color: rgba(255,255,255,0.6); }
+        .case-spec-value { color: var(--white); font-weight: 500; }
+        .case-profit { background: rgba(0,200,83,0.1); border: 1px solid var(--green); border-radius: 10px; padding: 12px; text-align: center; margin-top: auto; }
+        .case-profit-label { font-size: 11px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .case-profit-value { font-size: 1.8rem; font-weight: 700; color: var(--green); }
+        .case-margin { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 3px; }
+        
+        .slide-11 { flex-direction: row; align-items: center; gap: 40px; }
+        .partnership-content { flex: 1.3; }
+        .partnership-intro { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
+        .benefits-list { display: flex; flex-direction: column; gap: 12px; }
+        .benefit-item { display: flex; align-items: flex-start; gap: 15px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; border-left: 3px solid var(--gold); }
+        .benefit-number { font-size: 1.5rem; font-weight: 700; color: var(--gold); min-width: 30px; }
+        .benefit-text h4 { font-size: 16px; margin-bottom: 3px; color: var(--white); }
+        .benefit-text p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+        .partnership-visual { flex: 0.7; height: 60%; background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(139,115,85,0.1)); border: 2px solid var(--gold); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+        .partnership-visual-content { text-align: center; padding: 20px; }
+        .margin-icon { font-size: 3rem; margin-bottom: 15px; }
+        .margin-value { font-size: 2.5rem; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+        .margin-label { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+        
+        /* Слайд 12 - Контакты с функциональными ссылками */
+        .slide-12 { flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .final-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3.2rem); margin-bottom: 15px; color: var(--gold); }
+        .final-subtitle { font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.8); margin-bottom: 35px; max-width: 70%; }
+        .contacts-grid { display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        .contact-item { background: rgba(255,255,255,0.05); padding: 18px 30px; border-radius: 15px; border: 1px solid rgba(212,175,55,0.3); transition: all 0.3s; }
+        .contact-item:hover { background: rgba(212,175,55,0.1); transform: scale(1.05); border-color: var(--gold); }
+        .contact-label { font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+        .contact-value { font-size: 1.3rem; font-weight: 600; color: var(--white); }
+        .contact-value.small { font-size: 1.1rem; }
+        .call-button { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, var(--gold), var(--bronze)); color: var(--black); padding: 15px 45px; border-radius: 50px; font-size: 18px; font-weight: 700; text-decoration: none; margin-top: 15px; box-shadow: 0 10px 30px rgba(212,175,55,0.3); }
+        .logos-footer { display: flex; gap: 25px; margin-top: 40px; align-items: center; }
+        .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: rgba(255,255,255,0.5); }
+        .footer-logo.gold { color: var(--gold); }
+        
+        /* Адаптивность */
         @media (max-width: 1024px) {
-            .slide-2, .slide-7, .slide-11 {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .company-visual, .sink-showcase, .partnership-visual {
-                height: 40%;
-                width: 100%;
-            }
-
-            .tech-slide {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .tech-visual {
-                height: 40%;
-                width: 100%;
-                order: -1;
-            }
-
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .cases-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contacts-grid {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .sink-benefits {
-                grid-template-columns: 1fr;
-            }
+            .slide-2, .slide-7, .slide-11 { flex-direction: column; gap: 20px; }
+            .company-visual, .sink-showcase, .partnership-visual { height: 40%; width: 100%; }
+            .tech-slide { flex-direction: column; gap: 20px; }
+            .tech-visual { height: 40%; width: 100%; order: -1; }
+            .problem-grid, .test-grid { grid-template-columns: repeat(2, 1fr); }
+            .products-grid, .cases-grid { grid-template-columns: 1fr; }
+            .contacts-grid { flex-direction: column; gap: 12px; }
         }
-
         @media (max-width: 768px) {
-            .problem-grid, .test-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hook-text {
-                font-size: 1.3rem;
-            }
-
-            .logo-main {
-                font-size: 2rem;
-            }
+            .slide { padding: 20px; }
+            .problem-grid, .test-grid, .stats-grid { grid-template-columns: 1fr; }
+            .hook-text { font-size: 1.3rem; }
+            .logo-main { font-size: 2rem; }
+            .contacts-grid { flex-direction: column; width: 100%; padding: 0 20px; }
+            .contact-item { width: 100%; }
+            .call-button { width: 90%; justify-content: center; }
         }
     </style>
 </head>
@@ -1154,7 +194,7 @@
                 Что, если столешница может <span>готовить еду сама</span>?<br>
                 Без плиты. Без комфорок. Без чёрных квадратов.
             </h1>
-            <div class="patent-badge">Международный патент</div>
+            <div class="patent-badge">★ Международный патент</div>
         </div>
 
         <!-- Слайд 2: О компании -->
@@ -1186,10 +226,8 @@
                 </div>
             </div>
             <div class="company-visual">
-                <div class="company-visual-content">
-                    <div class="kg-logo">КГ</div>
-                    <div class="kg-text">Каменная эстетика</div>
-                </div>
+                <div class="kg-logo">КГ</div>
+                <div class="kg-text">Каменная эстетика</div>
             </div>
         </div>
 
@@ -1366,9 +404,7 @@
                         <li>Фартуки</li>
                         <li>Обеденные столы</li>
                     </ul>
-                    <div class="product-highlight">
-                        ⭐ Cer-Sink Full — интегрированные мойки
-                    </div>
+                    <div class="product-highlight">⭐ Cer-Sink Full — интегрированные мойки</div>
                 </div>
                 <div class="product-card">
                     <div class="product-icon">🛁</div>
@@ -1404,18 +440,9 @@
                     <div class="case-number">01</div>
                     <div class="case-title">Кухня 3 м с индукцией INVISIBLE</div>
                     <div class="case-specs">
-                        <div class="case-spec">
-                            <span class="case-spec-label">Состав</span>
-                            <span class="case-spec-value">Столешница 3 м, 2 комфорки</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Ваша цена партнёру</span>
-                            <span class="case-spec-value">117 000 ₽</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Рекомендуемая цена</span>
-                            <span class="case-spec-value">280 000–320 000 ₽</span>
-                        </div>
+                        <div class="case-spec"><span class="case-spec-label">Состав</span><span class="case-spec-value">Столешница 3 м, 2 комфорки</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Ваша цена партнёру</span><span class="case-spec-value">117 000 ₽</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Рекомендуемая цена</span><span class="case-spec-value">280 000–320 000 ₽</span></div>
                     </div>
                     <div class="case-profit">
                         <div class="case-profit-label">Прибыль партнёра</div>
@@ -1423,23 +450,13 @@
                         <div class="case-margin">Маржа: 140–175%</div>
                     </div>
                 </div>
-
                 <div class="case-card">
                     <div class="case-number">02</div>
                     <div class="case-title">Остров с комплексом технологий</div>
                     <div class="case-specs">
-                        <div class="case-spec">
-                            <span class="case-spec-label">Состав</span>
-                            <span class="case-spec-value">Остров 2000×800 + индукция + зарядка</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Ваша цена партнёру</span>
-                            <span class="case-spec-value">145 000 ₽</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Рекомендуемая цена</span>
-                            <span class="case-spec-value">380 000–450 000 ₽</span>
-                        </div>
+                        <div class="case-spec"><span class="case-spec-label">Состав</span><span class="case-spec-value">Остров 2000×800 + индукция + зарядка</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Ваша цена партнёру</span><span class="case-spec-value">145 000 ₽</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Рекомендуемая цена</span><span class="case-spec-value">380 000–450 000 ₽</span></div>
                     </div>
                     <div class="case-profit">
                         <div class="case-profit-label">Прибыль партнёра</div>
@@ -1447,23 +464,13 @@
                         <div class="case-margin">Маржа: 162–210%</div>
                     </div>
                 </div>
-
                 <div class="case-card">
                     <div class="case-number">03</div>
                     <div class="case-title">Комплекс «Премиум кухня»</div>
                     <div class="case-specs">
-                        <div class="case-spec">
-                            <span class="case-spec-label">Состав</span>
-                            <span class="case-spec-value">Кухня 4 м + остров + мойка Cer-Sink</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Ваша цена партнёру</span>
-                            <span class="case-spec-value">244 000 ₽</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Рекомендуемая цена</span>
-                            <span class="case-spec-value">700 000–850 000 ₽</span>
-                        </div>
+                        <div class="case-spec"><span class="case-spec-label">Состав</span><span class="case-spec-value">Кухня 4 м + остров + мойка Cer-Sink</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Ваша цена партнёру</span><span class="case-spec-value">244 000 ₽</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Рекомендуемая цена</span><span class="case-spec-value">700 000–850 000 ₽</span></div>
                     </div>
                     <div class="case-profit">
                         <div class="case-profit-label">Прибыль партнёра</div>
@@ -1471,23 +478,13 @@
                         <div class="case-margin">Маржа: 187–248%</div>
                     </div>
                 </div>
-
                 <div class="case-card">
                     <div class="case-number">04</div>
                     <div class="case-title">Мебельные фасады 12 м²</div>
                     <div class="case-specs">
-                        <div class="case-spec">
-                            <span class="case-spec-label">Состав</span>
-                            <span class="case-spec-value">Фасады кухни из камня</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Ваша цена партнёру</span>
-                            <span class="case-spec-value">324 000 ₽ (27 000 ₽/м²)</span>
-                        </div>
-                        <div class="case-spec">
-                            <span class="case-spec-label">Рекомендуемая цена</span>
-                            <span class="case-spec-value">650 000–750 000 ₽</span>
-                        </div>
+                        <div class="case-spec"><span class="case-spec-label">Состав</span><span class="case-spec-value">Фасады кухни из камня</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Ваша цена партнёру</span><span class="case-spec-value">324 000 ₽ (27 000 ₽/м²)</span></div>
+                        <div class="case-spec"><span class="case-spec-label">Рекомендуемая цена</span><span class="case-spec-value">650 000–750 000 ₽</span></div>
                     </div>
                     <div class="case-profit">
                         <div class="case-profit-label">Прибыль партнёра</div>
@@ -1502,9 +499,7 @@
         <div class="slide slide-11" data-slide="11">
             <div class="partnership-content">
                 <h2>Партнёрство с Bellezza Tech</h2>
-                <p class="partnership-intro">
-                    Премиум-сегмент с маржой в 3–5 раз выше рынка. Дизайнеры уже спрашивают.
-                </p>
+                <p class="partnership-intro">Премиум-сегмент с маржой в 3–5 раз выше рынка. Дизайнеры уже спрашивают.</p>
                 <div class="benefits-list">
                     <div class="benefit-item">
                         <div class="benefit-number">01</div>
@@ -1545,29 +540,43 @@
             </div>
         </div>
 
-        <!-- Слайд 12: Контакты -->
+        <!-- Слайд 12: Контакты с функциональными ссылками -->
         <div class="slide slide-12" data-slide="12">
             <h1 class="final-title">Давайте обсудим вашу прибыль</h1>
-            <p class="final-subtitle">
-                Запишитесь на презентацию-знакомство с дегустацией технологий
-            </p>
-
+            <p class="final-subtitle">Запишитесь на презентацию-знакомство с дегустацией технологий</p>
+            
+            <!-- Кликабельные контакты -->
             <div class="contacts-grid">
-                <div class="contact-item">
-                    <div class="contact-label">Телефон</div>
-                    <div class="contact-value">8 (902) 978-63-02</div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-label">Телефон</div>
-                    <div class="contact-value">8 (983) 700-49-29</div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-label">Email</div>
-                    <div class="contact-value small">89029786302@bk.ru</div>
-                </div>
+                <!-- Телефон 1 -->
+                <a href="tel:+79029786302" class="contact-link">
+                    <div class="contact-item">
+                        <div class="contact-label">📞 Позвонить</div>
+                        <div class="contact-value">8 (902) 978-63-02</div>
+                    </div>
+                </a>
+                
+                <!-- Телефон 2 -->
+                <a href="tel:+79837004929" class="contact-link">
+                    <div class="contact-item">
+                        <div class="contact-label">📞 Позвонить</div>
+                        <div class="contact-value">8 (983) 700-49-29</div>
+                    </div>
+                </a>
+                
+                <!-- Email -->
+                <a href="mailto:89029786302@bk.ru?subject=Партнерство%20КафельГранит&body=Здравствуйте,%20хочу%20обсудить%20партнерство" class="contact-link">
+                    <div class="contact-item">
+                        <div class="contact-label">✉️ Написать</div>
+                        <div class="contact-value small">89029786302@bk.ru</div>
+                    </div>
+                </a>
             </div>
 
-            <button class="cta-button" onclick="alert('Позвоните нам: 8 (902) 978-63-02')">Позвонить сейчас</button>
+            <!-- Кнопка звонка -->
+            <a href="tel:+79029786302" class="call-button">
+                <span>📞</span>
+                <span>Позвонить сейчас</span>
+            </a>
 
             <div class="logos-footer">
                 <div class="footer-logo gold">Bellezza Tech</div>
@@ -1577,7 +586,6 @@
         </div>
     </div>
 
-    <!-- Навигация -->
     <div class="nav" id="navDots"></div>
     <div class="nav-arrows">
         <button class="arrow-btn" onclick="prevSlide()">←</button>
@@ -1603,7 +611,7 @@
             const slides = document.querySelectorAll('.slide');
             const progressBar = document.getElementById('progressBar');
             const currentSlideEl = document.getElementById('currentSlideNum');
-
+            
             slides.forEach((slide, index) => {
                 slide.classList.remove('active');
                 if (index + 1 === currentSlide) {
@@ -1616,8 +624,7 @@
                 dot.classList.toggle('active', index + 1 === currentSlide);
             });
 
-            const progress = (currentSlide / totalSlides) * 100;
-            progressBar.style.width = progress + '%';
+            progressBar.style.width = (currentSlide / totalSlides) * 100 + '%';
             currentSlideEl.textContent = currentSlide;
         }
 
@@ -1647,33 +654,29 @@
             } else if (e.key === 'ArrowLeft') {
                 e.preventDefault();
                 prevSlide();
-            } else if (e.key === 'Home') {
-                e.preventDefault();
-                goToSlide(1);
-            } else if (e.key === 'End') {
-                e.preventDefault();
-                goToSlide(totalSlides);
             }
         });
 
         let touchStartX = 0;
-        let touchEndX = 0;
-
         document.addEventListener('touchstart', e => {
             touchStartX = e.changedTouches[0].screenX;
-        });
+        }, {passive: true});
 
         document.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
+            const touchEndX = e.changedTouches[0].screenX;
             if (touchEndX < touchStartX - 50) nextSlide();
             if (touchEndX > touchStartX + 50) prevSlide();
-        }
+        }, {passive: true});
 
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-</html>
+</html>"""
+
+# Сохраняем файл
+final_path = '/mnt/kimi/output/Презентация_финал_полная.html'
+with open(final_path, 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print(f"✅ Финальная версия сохранена: {final_path}")
+print(f"📱 Размер: {len(html_content)} символов")
