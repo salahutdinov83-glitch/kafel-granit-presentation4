@@ -1,5 +1,4 @@
-# Создадим HTML файл с функциональными ссылками
-html_content = """<!DOCTYPE html>
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -672,11 +671,3 @@ html_content = """<!DOCTYPE html>
     </script>
 </body>
 </html>"""
-
-# Сохраняем файл
-final_path = '/mnt/kimi/output/Презентация_финал_полная.html'
-with open(final_path, 'w', encoding='utf-8') as f:
-    f.write(html_content)
-
-print(f"✅ Финальная версия сохранена: {final_path}")
-print(f"📱 Размер: {len(html_content)} символов")
